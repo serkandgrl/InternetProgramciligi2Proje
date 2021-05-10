@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bolumler">
+    <Key>
+      <PropertyRef Name="bolumKodu" />
+    </Key>
+    <Property Name="bolumKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="bolumAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="bolumAdres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="bolumTelefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dersler">
+    <Key>
+      <PropertyRef Name="dersKodu" />
+    </Key>
+    <Property Name="dersKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="dersAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="dersKredi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="dersOgretimElemanı" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Notlar">
+    <Key>
+      <PropertyRef Name="notOgrenciNo" />
+    </Key>
+    <Property Name="notOgrenciNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="notDersKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="notVize" Type="nvarchar" MaxLength="50" />
+    <Property Name="notFinal" Type="nvarchar" MaxLength="50" />
+    <Property Name="notOrtalama" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Ogrenciler">
+    <Key>
+      <PropertyRef Name="ogrNo" />
+    </Key>
+    <Property Name="ogrNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrTC" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrCinsiyet" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrTelefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrMail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ogrBolumKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Notlar_ToDersler">
+    <End Role="Dersler" Type="Self.Dersler" Multiplicity="1" />
+    <End Role="Notlar" Type="Self.Notlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dersler">
+        <PropertyRef Name="dersKodu" />
+      </Principal>
+      <Dependent Role="Notlar">
+        <PropertyRef Name="notDersKodu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Notlar_ToOgrenciler">
+    <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="1" />
+    <End Role="Notlar" Type="Self.Notlar" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Ogrenciler">
+        <PropertyRef Name="ogrNo" />
+      </Principal>
+      <Dependent Role="Notlar">
+        <PropertyRef Name="notOgrenciNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ogrenciler_ToBolumler">
+    <End Role="Bolumler" Type="Self.Bolumler" Multiplicity="1" />
+    <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolumler">
+        <PropertyRef Name="bolumKodu" />
+      </Principal>
+      <Dependent Role="Ogrenciler">
+        <PropertyRef Name="ogrBolumKodu" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB01ModelStoreContainer">
+    <EntitySet Name="Bolumler" EntityType="Self.Bolumler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dersler" EntityType="Self.Dersler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notlar" EntityType="Self.Notlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ogrenciler" EntityType="Self.Ogrenciler" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Notlar_ToDersler" Association="Self.FK_Notlar_ToDersler">
+      <End Role="Dersler" EntitySet="Dersler" />
+      <End Role="Notlar" EntitySet="Notlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notlar_ToOgrenciler" Association="Self.FK_Notlar_ToOgrenciler">
+      <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+      <End Role="Notlar" EntitySet="Notlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ogrenciler_ToBolumler" Association="Self.FK_Ogrenciler_ToBolumler">
+      <End Role="Bolumler" EntitySet="Bolumler" />
+      <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

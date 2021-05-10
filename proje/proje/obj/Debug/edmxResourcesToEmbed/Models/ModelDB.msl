@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB01ModelStoreContainer" CdmEntityContainer="DB01Entities">
+    <EntitySetMapping Name="Bolumler">
+      <EntityTypeMapping TypeName="DB01Model.Bolumler">
+        <MappingFragment StoreEntitySet="Bolumler">
+          <ScalarProperty Name="bolumKodu" ColumnName="bolumKodu" />
+          <ScalarProperty Name="bolumAdi" ColumnName="bolumAdi" />
+          <ScalarProperty Name="bolumAdres" ColumnName="bolumAdres" />
+          <ScalarProperty Name="bolumTelefon" ColumnName="bolumTelefon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dersler">
+      <EntityTypeMapping TypeName="DB01Model.Dersler">
+        <MappingFragment StoreEntitySet="Dersler">
+          <ScalarProperty Name="dersKodu" ColumnName="dersKodu" />
+          <ScalarProperty Name="dersAdi" ColumnName="dersAdi" />
+          <ScalarProperty Name="dersKredi" ColumnName="dersKredi" />
+          <ScalarProperty Name="dersOgretimElemanı" ColumnName="dersOgretimElemanı" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notlar">
+      <EntityTypeMapping TypeName="DB01Model.Notlar">
+        <MappingFragment StoreEntitySet="Notlar">
+          <ScalarProperty Name="notOgrenciNo" ColumnName="notOgrenciNo" />
+          <ScalarProperty Name="notDersKodu" ColumnName="notDersKodu" />
+          <ScalarProperty Name="notVize" ColumnName="notVize" />
+          <ScalarProperty Name="notFinal" ColumnName="notFinal" />
+          <ScalarProperty Name="notOrtalama" ColumnName="notOrtalama" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ogrenciler">
+      <EntityTypeMapping TypeName="DB01Model.Ogrenciler">
+        <MappingFragment StoreEntitySet="Ogrenciler">
+          <ScalarProperty Name="ogrNo" ColumnName="ogrNo" />
+          <ScalarProperty Name="ogrTC" ColumnName="ogrTC" />
+          <ScalarProperty Name="ogrAd" ColumnName="ogrAd" />
+          <ScalarProperty Name="ogrSoyad" ColumnName="ogrSoyad" />
+          <ScalarProperty Name="ogrCinsiyet" ColumnName="ogrCinsiyet" />
+          <ScalarProperty Name="ogrTelefon" ColumnName="ogrTelefon" />
+          <ScalarProperty Name="ogrMail" ColumnName="ogrMail" />
+          <ScalarProperty Name="ogrBolumKodu" ColumnName="ogrBolumKodu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

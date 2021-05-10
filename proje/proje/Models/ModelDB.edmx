@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bolumler">
+          <Key>
+            <PropertyRef Name="bolumKodu" />
+          </Key>
+          <Property Name="bolumKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bolumAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bolumAdres" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bolumTelefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dersler">
+          <Key>
+            <PropertyRef Name="dersKodu" />
+          </Key>
+          <Property Name="dersKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dersAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dersKredi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dersOgretimElemanı" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notlar">
+          <Key>
+            <PropertyRef Name="notOgrenciNo" />
+          </Key>
+          <Property Name="notOgrenciNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notDersKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notVize" Type="nvarchar" MaxLength="50" />
+          <Property Name="notFinal" Type="nvarchar" MaxLength="50" />
+          <Property Name="notOrtalama" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Ogrenciler">
+          <Key>
+            <PropertyRef Name="ogrNo" />
+          </Key>
+          <Property Name="ogrNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrTC" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrCinsiyet" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrTelefon" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrMail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrBolumKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Notlar_ToDersler">
+          <End Role="Dersler" Type="Self.Dersler" Multiplicity="1" />
+          <End Role="Notlar" Type="Self.Notlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dersler">
+              <PropertyRef Name="dersKodu" />
+            </Principal>
+            <Dependent Role="Notlar">
+              <PropertyRef Name="notDersKodu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notlar_ToOgrenciler">
+          <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="1" />
+          <End Role="Notlar" Type="Self.Notlar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenciler">
+              <PropertyRef Name="ogrNo" />
+            </Principal>
+            <Dependent Role="Notlar">
+              <PropertyRef Name="notOgrenciNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ogrenciler_ToBolumler">
+          <End Role="Bolumler" Type="Self.Bolumler" Multiplicity="1" />
+          <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolumler">
+              <PropertyRef Name="bolumKodu" />
+            </Principal>
+            <Dependent Role="Ogrenciler">
+              <PropertyRef Name="ogrBolumKodu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB01ModelStoreContainer">
+          <EntitySet Name="Bolumler" EntityType="Self.Bolumler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dersler" EntityType="Self.Dersler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notlar" EntityType="Self.Notlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogrenciler" EntityType="Self.Ogrenciler" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Notlar_ToDersler" Association="Self.FK_Notlar_ToDersler">
+            <End Role="Dersler" EntitySet="Dersler" />
+            <End Role="Notlar" EntitySet="Notlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notlar_ToOgrenciler" Association="Self.FK_Notlar_ToOgrenciler">
+            <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+            <End Role="Notlar" EntitySet="Notlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ogrenciler_ToBolumler" Association="Self.FK_Ogrenciler_ToBolumler">
+            <End Role="Bolumler" EntitySet="Bolumler" />
+            <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB01Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bolumler">
+          <Key>
+            <PropertyRef Name="bolumKodu" />
+          </Key>
+          <Property Name="bolumKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bolumAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bolumAdres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bolumTelefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ogrenciler" Relationship="Self.FK_Ogrenciler_ToBolumler" FromRole="Bolumler" ToRole="Ogrenciler" />
+        </EntityType>
+        <EntityType Name="Dersler">
+          <Key>
+            <PropertyRef Name="dersKodu" />
+          </Key>
+          <Property Name="dersKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dersAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dersKredi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dersOgretimElemanı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Notlar" Relationship="Self.FK_Notlar_ToDersler" FromRole="Dersler" ToRole="Notlar" />
+        </EntityType>
+        <EntityType Name="Notlar">
+          <Key>
+            <PropertyRef Name="notOgrenciNo" />
+          </Key>
+          <Property Name="notOgrenciNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="notDersKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="notVize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notFinal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notOrtalama" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Dersler" Relationship="Self.FK_Notlar_ToDersler" FromRole="Notlar" ToRole="Dersler" />
+          <NavigationProperty Name="Ogrenciler" Relationship="Self.FK_Notlar_ToOgrenciler" FromRole="Notlar" ToRole="Ogrenciler" />
+        </EntityType>
+        <EntityType Name="Ogrenciler">
+          <Key>
+            <PropertyRef Name="ogrNo" />
+          </Key>
+          <Property Name="ogrNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrTC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrCinsiyet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrTelefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrBolumKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Bolumler" Relationship="Self.FK_Ogrenciler_ToBolumler" FromRole="Ogrenciler" ToRole="Bolumler" />
+          <NavigationProperty Name="Notlar" Relationship="Self.FK_Notlar_ToOgrenciler" FromRole="Ogrenciler" ToRole="Notlar" />
+        </EntityType>
+        <Association Name="FK_Ogrenciler_ToBolumler">
+          <End Role="Bolumler" Type="Self.Bolumler" Multiplicity="1" />
+          <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolumler">
+              <PropertyRef Name="bolumKodu" />
+            </Principal>
+            <Dependent Role="Ogrenciler">
+              <PropertyRef Name="ogrBolumKodu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notlar_ToDersler">
+          <End Role="Dersler" Type="Self.Dersler" Multiplicity="1" />
+          <End Role="Notlar" Type="Self.Notlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dersler">
+              <PropertyRef Name="dersKodu" />
+            </Principal>
+            <Dependent Role="Notlar">
+              <PropertyRef Name="notDersKodu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notlar_ToOgrenciler">
+          <End Role="Ogrenciler" Type="Self.Ogrenciler" Multiplicity="1" />
+          <End Role="Notlar" Type="Self.Notlar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenciler">
+              <PropertyRef Name="ogrNo" />
+            </Principal>
+            <Dependent Role="Notlar">
+              <PropertyRef Name="notOgrenciNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB01Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bolumler" EntityType="Self.Bolumler" />
+          <EntitySet Name="Dersler" EntityType="Self.Dersler" />
+          <EntitySet Name="Notlar" EntityType="Self.Notlar" />
+          <EntitySet Name="Ogrenciler" EntityType="Self.Ogrenciler" />
+          <AssociationSet Name="FK_Ogrenciler_ToBolumler" Association="Self.FK_Ogrenciler_ToBolumler">
+            <End Role="Bolumler" EntitySet="Bolumler" />
+            <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notlar_ToDersler" Association="Self.FK_Notlar_ToDersler">
+            <End Role="Dersler" EntitySet="Dersler" />
+            <End Role="Notlar" EntitySet="Notlar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notlar_ToOgrenciler" Association="Self.FK_Notlar_ToOgrenciler">
+            <End Role="Ogrenciler" EntitySet="Ogrenciler" />
+            <End Role="Notlar" EntitySet="Notlar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB01ModelStoreContainer" CdmEntityContainer="DB01Entities">
+          <EntitySetMapping Name="Bolumler">
+            <EntityTypeMapping TypeName="DB01Model.Bolumler">
+              <MappingFragment StoreEntitySet="Bolumler">
+                <ScalarProperty Name="bolumKodu" ColumnName="bolumKodu" />
+                <ScalarProperty Name="bolumAdi" ColumnName="bolumAdi" />
+                <ScalarProperty Name="bolumAdres" ColumnName="bolumAdres" />
+                <ScalarProperty Name="bolumTelefon" ColumnName="bolumTelefon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dersler">
+            <EntityTypeMapping TypeName="DB01Model.Dersler">
+              <MappingFragment StoreEntitySet="Dersler">
+                <ScalarProperty Name="dersKodu" ColumnName="dersKodu" />
+                <ScalarProperty Name="dersAdi" ColumnName="dersAdi" />
+                <ScalarProperty Name="dersKredi" ColumnName="dersKredi" />
+                <ScalarProperty Name="dersOgretimElemanı" ColumnName="dersOgretimElemanı" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notlar">
+            <EntityTypeMapping TypeName="DB01Model.Notlar">
+              <MappingFragment StoreEntitySet="Notlar">
+                <ScalarProperty Name="notOgrenciNo" ColumnName="notOgrenciNo" />
+                <ScalarProperty Name="notDersKodu" ColumnName="notDersKodu" />
+                <ScalarProperty Name="notVize" ColumnName="notVize" />
+                <ScalarProperty Name="notFinal" ColumnName="notFinal" />
+                <ScalarProperty Name="notOrtalama" ColumnName="notOrtalama" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogrenciler">
+            <EntityTypeMapping TypeName="DB01Model.Ogrenciler">
+              <MappingFragment StoreEntitySet="Ogrenciler">
+                <ScalarProperty Name="ogrNo" ColumnName="ogrNo" />
+                <ScalarProperty Name="ogrTC" ColumnName="ogrTC" />
+                <ScalarProperty Name="ogrAd" ColumnName="ogrAd" />
+                <ScalarProperty Name="ogrSoyad" ColumnName="ogrSoyad" />
+                <ScalarProperty Name="ogrCinsiyet" ColumnName="ogrCinsiyet" />
+                <ScalarProperty Name="ogrTelefon" ColumnName="ogrTelefon" />
+                <ScalarProperty Name="ogrMail" ColumnName="ogrMail" />
+                <ScalarProperty Name="ogrBolumKodu" ColumnName="ogrBolumKodu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
